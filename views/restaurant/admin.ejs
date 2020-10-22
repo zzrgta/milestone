@@ -1,0 +1,41 @@
+<form action="/restaurant/admin" method="GET">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Hello Bulma!</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+      </head>
+
+      <section class="section">
+
+        <div class="container">
+            <div class="control">
+                  <a id="Home" href="http://localhost:1337/">Home</a>
+                  <a id="Create" href="http://localhost:1337/restaurant/create">Create</a>
+                  <a id="Search" href="http://localhost:1337/restaurant/search">Search</a>
+                  <a id="Admin" href="http://localhost:1337/restaurant/admin ">Admin</a>
+            </div>
+        </div>
+
+        <div class="container">
+            <h1 class="title">
+              Q-Pon
+            </h1>
+            <p class="subtitle">
+              Redeem your coins for dining <strong>Coupon</strong>!
+            </p>
+        </div>
+
+
+    </section>
+
+    <table class="table is-bordered is-striped">
+    <tr><td>ID </td><td>Title </td><td>restaurant </td><td> </td></tr>
+
+    <% restaurants.forEach( function(restaurant) { %>
+        <tr><td><%= restaurant.id%></td><td><%= restaurant.title%></td><td><%= restaurant.Rname%></td><td><a href="http://localhost:1337/restaurant/update/<%= restaurant.id%>">update</a></td></tr>
+    <% }); %>
+</table>
+    
+</form>

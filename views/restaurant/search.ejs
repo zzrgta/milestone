@@ -1,0 +1,168 @@
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Hello Bulma!</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+      </head>
+      <section class="section">
+
+        <div class="container">
+            <div class="control">
+                  <a id="Home" href="http://localhost:1337/">Home</a>
+                  <a id="Create" href="http://localhost:1337/restaurant/create">Create</a>
+                  <a id="Search" href="http://localhost:1337/restaurant/search">Search</a>
+                  <a id="Admin" href="http://localhost:1337/restaurant/admin ">Admin</a>
+            </div>
+        </div>
+
+        <div class="container">
+            <h1 class="title">
+              Q-Pon
+            </h1>
+            <p class="subtitle">
+              Input information of your <strong>Coupon</strong> to search!
+            </p>
+        </div>
+    
+    </section>
+      <div class="column">
+      <% Restaurants.forEach( function(restaurant) { %>
+      <div class="column card is-one-thirds column">
+          <div>
+          <div>
+              <a href="/restaurant/read/<%= restaurant.id%>">
+                <img style="object-fit: contain;" src="<%= restaurant.image%>"/>
+            </a>
+          </div>
+          <div class="Restaurant">
+              <%= restaurant.Rname%>
+          </div>
+          <div class="title">
+            <%= restaurant.title%>
+        </div>
+        <div class="coins">
+            <%= restaurant.coins%>
+        </div>
+      </div>
+      </div>
+      <% }); %>
+
+      <div class="column card is-one-thirds column">
+          <form action="/restaurant/search" method="GET">
+            <div class="field">
+                <label class="label">Region</label>
+                   <div class="select">
+                       <select name="region" id="region" >
+                           <option value="Region">Select Region</option>
+                           <option value="Kowloon">Kowloon</option>
+                           <option value="HKI">Hong Kong Island</option>
+                           <option value="NT">New Territories</option>
+                       </select>
+                   </div>
+           </div>
+    <div class="field">
+        <label class="label">Valid on</label>
+        <div class="control">
+            <input class="input" type="text" name="Expirydate" value="not defined">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Max coins</label>
+        <div class="control">
+            <input class="input" type="number" name="maxcoins">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Min coins</label>
+        <div class="control">
+            <input class="input" type="number" name="mincoins">
+        </div>
+    </div>
+
+    <div class="field">
+        <div class="control">
+            <button class="button is-link" type="submit">Search</button>
+        </div>
+    </div>
+    
+</form>
+</div>
+</div>
+
+<nav class="pagination" role="navigation" aria-label="pagination">
+    <a class="pagination-previous" id="previousButton">Previous</a>
+    <a class="pagination-next" id="nextButton">Next page</a>
+    <ul class="pagination-list">
+        <li>
+            <a class="pagination-link" id="firstLink">1</a>
+        </li>
+        <li>
+            <span class="pagination-ellipsis">&hellip;</span>
+        </li>
+        <li>
+            <a class="pagination-link" id="previousLink">45</a>
+        </li>
+        <li>
+            <a class="pagination-link is-current" id="currentLink">46</a>
+        </li>
+        <li>
+            <a class="pagination-link" id="nextLink">47</a>
+        </li>
+        <li>
+            <span class="pagination-ellipsis">&hellip;</span>
+        </li>
+        <li>
+            <a class="pagination-link" id="lastLink">86</a>
+        </li>
+    </ul>
+</nav>
+
+<script>
+    function setPagination() {
+
+        var previousButton = document.getElementById("previousButton");
+        var nextButton = document.getElementById("nextButton");
+        var currentLink = document.getElementById("currentLink");
+        var previousLink = document.getElementById("previousLink");
+        var nextLink = document.getElementById("nextLink");
+        var firstLink = document.getElementById("firstLink");
+        var lastLink = document.getElementById("lastLink");
+
+        var numOfRecords = parseInt("<%= numOfRecords %>");
+        var limit = Math.max(parseInt("<%= req.query.limit %>"), 2) || 2;
+        var offset = Math.max(parseInt("<%= req.query.offset %>"), 0) || 0;
+
+        var baseUrl = "/restaurant/search?limit=" + limit + "region=<%= Region %>&maxcoins=<%= maxcoins%>&mincoins=<%=mincoins%>&date=<%=Expirydate%>&offset=";
+
+        firstLink.href = baseUrl + 0;
+        previousButton.href = baseUrl + (offset - limit);
+        previousLink.href = baseUrl + (offset - limit);
+        currentLink.href = baseUrl + offset;
+        nextLink.href = baseUrl + (offset + limit);
+        nextButton.href = baseUrl + (offset + limit);
+        lastLink.href = baseUrl + (Math.ceil(numOfRecords / limit) - 1) * limit;
+              
+        var currentPageNumber = Math.floor(offset / limit) + 1;
+
+        previousLink.innerHTML = currentPageNumber - 1;
+        currentLink.innerHTML = currentPageNumber;
+        nextLink.innerHTML = currentPageNumber + 1;
+        lastLink.innerHTML = Math.ceil(numOfRecords / limit); 
+
+        if (offset < limit) {
+            previousButton.setAttribute("disabled", true);
+            previousButton.href = "";
+            previousLink.style.display = "none";
+        }
+
+        if (offset + limit >= numOfRecords) {
+            nextButton.setAttribute("disabled", true);
+            nextButton.href = "";
+            nextLink.style.display = "none";
+        }
+    }
+
+    setPagination();
+
+</script>

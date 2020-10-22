@@ -1,0 +1,173 @@
+<form action="/restaurant/create" method="post">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Hello Bulma!</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+      </head>
+      <body>
+        <section class="section">
+
+            <div class="container">
+                <div class="control">
+                      <a id="Home" href="http://localhost:1337/">Home</a>
+                      <a id="Create" href="http://localhost:1337/restaurant/create">Create</a>
+                      <a id="Search" href="http://localhost:1337/restaurant/search">Search</a>
+                      <a id="Admin" href="http://localhost:1337/restaurant/admin ">Admin</a>
+                </div>
+            </div>
+
+            <div class="container">
+                <h1 class="title">
+                  Q-Pon
+                </h1>
+                <p class="subtitle">
+                  Create information of your <strong>Coupon</strong>!
+                </p>
+            </div>
+        
+        </section>
+          </body>
+     
+    <style>
+        .location{
+            display: flex;
+            padding-right: 30x;
+        }
+    
+        .quotacoins{
+            display: flex;
+        }
+    </style>
+
+
+
+<div class="column">
+    <div class="column is-half">
+    <div class="field">
+        <label class="label">Title</label>
+        <div class="control">
+            <input class="input" type="text" name="title" required>
+        </div>
+        <label class="label">Restaurant name</label>
+        <div class="control">
+            <input class="input" type="text" name="Rname" required>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Quota</label>
+        <div class="control">
+            <input class="input" type="number" name="quota" required>
+        </div>
+        <label class="label">Coins</label>
+        <div class="control">
+            <input class="input" type="number" name="coins" required>
+        </div>
+    </div>
+
+    
+
+    <div class="filed">
+        <label class="label">Expiry date</label>
+        <div class="control">
+            <input class="input" type="text" name="Expirydate" required>
+        </div>
+
+    <div class="field">
+         <label class="label">Region</label>
+        <div class="control">
+            <div class="select">
+                <select name="region" id="region" onchange="regionselected(this.value)">
+                    <option value="">Select Region</option>
+                    <option value="Kowloon">Kowloon</option>
+                    <option value="HKI">Hong Kong Island</option>
+                    <option value="NT">New Territories</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <label class="label">Mall</label>
+        <div class="select">
+            <select name="mall" id="mall" disabled>
+            </select>
+        </div>
+    </div>
+
+    <div class="filed">
+        <label class="label">Image</label>
+        <div class="control">
+            <input class="input" type="text" name="image" required>
+        </div>
+    </div>
+
+        <div class="field">
+            <label class="label">Detail</label>
+            <div class="control">
+                <textarea name="message" class="textarea" rows="4" placeholder="Textarea"></textarea>
+            </div>
+        </div>
+
+    <div class="field">
+        <div class="control">
+            <button class="button is-link" type="submit">Create</button>
+        </div>
+    </div>
+</div>
+</div>
+
+
+    <script>
+        var Kowloon = ["Elements","Festival Walk","Harbour City","MegaBox","APM"];
+        var HKI = ["IFC Mall","Pacific Place","Times Square"];
+        var NT = ["New Town Plaza","Tsuen Wan Plaza"];
+    
+        function regionselected(region) {
+        alert(region);
+    
+        var mallElem = document.getElementById("mall");
+    mallElem.options.length = 0;
+    
+    if (region == "Kowloon") {
+    
+    Kowloon.forEach(function (item) {
+        var option = document.createElement("option");
+        option.text = item;
+        option.value = item;
+        mallElem.add(option);
+    });
+    
+    mallElem.disabled = false;
+    
+    } else if (region == "HKI") {
+    
+    HKI.forEach(function (item) {
+        var option = document.createElement("option");
+        option.text = item;
+        option.value = item;
+        mallElem.add(option);
+    });
+    
+    mallElem.disabled = false;
+    
+    } else if (region == "NT"){
+    
+    NT.forEach(function (item) {
+        var option = document.createElement("option");
+        option.text = item;
+        option.value = item;
+        mallElem.add(option);
+    });
+
+    mallElem.disabled = false;
+
+    }else{
+        mallElem.disabled = true;
+    }
+    }
+    </script>
+
+</form>
